@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title class="ion-text-center">
+      PodHead
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content >
+  <ion-list lines="none">
+    <ion-item *ngFor="let a of snippets; let i = index">
+      <ion-card>
+
+        <ion-card-header>
+          <ion-grid>
+            <ion-card-subtitle>{{a.source}}</ion-card-subtitle>
+            <p></p>
+            <ion-row>
+            <ion-col size="11">
+              <ion-card-title>{{ a.title }}</ion-card-title>
+            </ion-col>
+            <ion-col size="1">
+              <button ion-button small (click)="toggleSection(i)" *ngIf="a.maximize===false">
+                <ion-icon name="add"></ion-icon>
+              </button>
+              <button ion-button small (click)="toggleSection(i)" *ngIf="a.maximize===true">
+                <ion-icon name="remove"></ion-icon>
+              </button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-header>
+
+
+        <ion-card-content *ngIf="a.maximize===true">
+
+        <p style="white-space: pre-line">
+          {{ a.details }}
+        </ion-card-content>
+        <ion-row>
+         <ion-col>
+           <button ion-button icon-start clear small>
+              <ion-icon name="heart-empty" *ngIf="isLikedByUser(a)===false" (click)="createHeart(a,i);incrementCount(a)"></ion-icon>
+              <ion-icon name="heart" *ngIf="isLikedByUser(a)===true" (click) ="removeHeart(a,i);decrementCount(a)"></ion-icon>
+           </button>
+           <ion-note>{{a.heartCount}}</ion-note>
+         </ion-col>
+         <ion-col class="ion-align-self-center ion-text-center">
+           <ion-note>
+              Posted: {{a.uploadedDateTime.seconds*1000 | date}}
+           </ion-note>
+         </ion-col>
+        </ion-row>
+      </ion-card>
+    </ion-item>
+  </ion-list>
+</ion-content>

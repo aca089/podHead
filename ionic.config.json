@@ -1,0 +1,7 @@
+{
+  "name": "podsight",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
