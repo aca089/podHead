@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { ImagePicker } from '@ionic-native/image-picker';
 
 import { FirebaseService } from "../services/firebase.service";
 import * as firebase from 'firebase/app';
@@ -16,6 +16,12 @@ export class Tab3Page {
   profilePictureUrl:string;
   storageRef:string;
   images:any[];
+  options = {
+    maximumImagesCount: 2,
+    width: 500,
+    height: 500,
+    quality: 75
+  }
 
 
   constructor(
@@ -25,18 +31,16 @@ export class Tab3Page {
 
   ngOnInit(){
     //
-    this.currentUser = this.firebaseService.afAuth.auth.currentUser;
-
-    this.firebaseService.getProfileImage(this.currentUser.uid).then(
-      imageUrl=> this.profilePictureUrl = imageUrl
-    )
+    // this.currentUser = this.firebaseService.afAuth.auth.currentUser;
+    //
+    // this.firebaseService.getProfileImage(this.currentUser.uid).then(
+    //   imageUrl=> this.profilePictureUrl = imageUrl
+    // )
   }
 
   getPictures() {
-  this.imagePicker.getPictures({
-    maximumImagesCount: 5,
-    outputType: 1
-  }).then(selectedImg => {
+  this.imagePicker.getPictures(this.options).then(selectedImg => {
+    console.log("Image Picker function");
     selectedImg.forEach(i => this.images.push("data:image/jpeg;base64," + i));
   })
 }
